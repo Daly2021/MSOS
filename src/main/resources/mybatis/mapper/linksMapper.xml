@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.msos.dao.linksMapper">
+    <select id="selectLinks" parameterType="Links" resultType="Links">
+        select * from links
+        <where>
+            <if test="links_id!=null">links_id=#{links_id}</if>
+            <if test="links_name!=null">and links_name=#{links_name}</if>
+            <if test="links_title!=null">and links_title=#{links_title}</if>
+            <if test="links_url!=null">and links_url=#{links_url}</if>
+            <if test="links_img!=null">and links_img=#{links_img}</if>
+        </where>
+    </select>
+    <select id="selectLinksByTitle" parameterType="Links" resultType="Links">
+        select * from links
+        where links_name like concat('%',#{links_name},'%')
+    </select>
+    <delete id="deleteLinks" parameterType="int">
+        delete
+        from links
+        where links_id=#{links_id}
+    </delete>
+    <update id="updateLinks" parameterType="Links">
+        update links
+        <set>
+            <if test="links_name!=null">links_name=#{links_name},</if>
+            <if test="links_title!=null">links_title=#{links_title},</if>
+            <if test="links_url!=null">links_url=#{links_url},</if>
+            <if test="links_img!=null">links_img=#{links_img}</if>
+        </set>
+        where links_id=#{links_id}
+    </update>
+    <insert id="insertLinks" parameterType="Links">
+        insert into links(links_id,links_name,links_title,links_url,links_img)
+        values (#{links_id},#{links_name},#{links_title},#{links_url},#{links_img})
+    </insert>
+</mapper>

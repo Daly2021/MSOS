@@ -1,0 +1,109 @@
+.layui-form {
+	width: 320px !important;
+	margin: auto !important;
+	margin-top: 160px !important;
+	border-radius:20px ;
+	color: #0a95e3;
+}
+
+.layui-form button {
+	width: 100% !important;
+	height: 44px !important;
+	line-height: 44px !important;
+	font-size: 16px !important;
+	background-color: #039be5 !important;
+	font-weight: 550 !important;
+}
+
+.layui-form-checked[lay-skin=primary] i {
+	border-color: #039be5 !important;
+	background-color: #039be5 !important;
+	color: #fff !important;
+}
+
+.layui-tab-content {
+	margin-top: 15px !important;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+
+.layui-form-item {
+	margin-top: 20px !important;
+	font-size: 1.1rem;
+	font-weight: 700;
+}
+
+.layui-input {
+	padding: 0 35px;
+	height: 45px;
+	line-height: 45px;
+	font-size: 1rem;
+	border-radius: 30px;
+	box-shadow:1px 1px 1px #1f5d92, -5px -5px 4px #2773b6; ;
+	color: #22597f;
+	border: 1px solid #22597f;
+	background-color: transparent;
+	border-radius: 30px;
+	box-shadow: none;
+}
+
+.layui-input:focus {
+	box-shadow: 0px 0px 2px 1px #1c547d !important;
+}
+
+.layui-form-danger:focus{
+	box-shadow: 0px 0px 2px 1px #f56c6c !important;
+}
+
+.logo {
+	width: 70px !important;
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+	margin-left: 20px !important;
+}
+
+.title {
+	font-size: 32px !important;
+	font-weight: 550 !important;
+	margin-left: 20px !important;
+	color: #199ee3 !important;
+	display: inline-block !important;
+	height: 60px !important;
+	line-height: 60px !important;
+	margin-top: 10px !important;
+	position: absolute !important;
+}
+
+.desc {
+	width: 100% !important;
+	text-align: center !important;
+	color: gray !important;
+	height: 60px !important;
+	line-height: 60px !important;
+	font-weight: 300;
+	font-size: 1.25rem;
+	line-height: 1.4em;
+	color: #eee;
+}
+
+body {
+	background-repeat:no-repeat;
+	background-color: whitesmoke;
+	background-size: 100%;
+	height: 100%;
+
+ }
+
+.code {
+	float: left;
+	margin-right: 13px;
+	margin: 0px !important;
+	border: #b0c4fc 3px solid;
+	display: inline-block!important;
+}
+
+.codeImage {
+	float: right;
+	height: 42px;
+	border:#b0c4fc 3px solid;
+}

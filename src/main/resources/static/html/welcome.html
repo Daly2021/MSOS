@@ -1,0 +1,302 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>msos博客论坛</title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+        <link rel="stylesheet" href="../css/font.css">
+        <link rel="stylesheet" href="../css/xadmin.css">
+        <link rel="shortcut icon" th:href="@{favicon.ico}" />
+        <script src="../component/js/jquery-3.3.1.js"></script>
+        <script src="../component/layui/layui.js" charset="utf-8"></script>
+        <script type="text/javascript" src="../component/js/xadmin.js"></script>
+        <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+        <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body ">
+                            <blockquote class="layui-elem-quote">欢迎光临,当前时间:
+                                <span th:text="${session.time}"></span>当前IP:
+                                <span th:text="${session.ip}"></span>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">数据统计</div>
+                        <div class="layui-card-body ">
+                            <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
+                                <li class="layui-col-md2 layui-col-xs6">
+                                    <a href="javascript:;" class="x-admin-backlog-body">
+                                        <h3>文章数</h3>
+                                        <p>
+                                            <cite th:text="${session.articlesCount}"></cite></p>
+                                    </a>
+                                </li>
+                                <li class="layui-col-md2 layui-col-xs6">
+                                    <a href="javascript:;" class="x-admin-backlog-body">
+                                        <h3>会员数</h3>
+                                        <p>
+                                            <cite th:text="${session.userCount}"></cite></p>
+                                    </a>
+                                </li>
+                                <li class="layui-col-md2 layui-col-xs6">
+                                    <a href="javascript:;" class="x-admin-backlog-body">
+                                        <h3 >总评论数</h3>
+                                        <p>
+                                            <cite th:text="${session.commentCount}"></cite></p>
+                                    </a>
+                                </li>
+                                <li class="layui-col-md2 layui-col-xs6">
+                                    <a href="javascript:;" class="x-admin-backlog-body">
+                                        <h3 >留言数</h3>
+                                        <p>
+                                            <cite th:text="${session.messageCount}"></cite></p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-fluid">
+                <div class="layui-row layui-col-space15">
+
+                    <div class="layui-col-sm12 layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">最新一周访问次数</div>
+                            <div class="layui-card-body" style="min-height: 450px;">
+                                <div id="main1" class="layui-col-sm12" style="height: 480px;"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm12 layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">用户来源</div>
+                            <div class="layui-card-body" style="min-height: 180px;">
+                                <div id="main3" class="layui-col-sm12" style="height: 200px;"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm12 layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">文章分类</div>
+                            <div class="layui-card-body" style="min-height: 180px;">
+                                <div id="main4" class="layui-col-sm12" style="height: 200px;"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+            <script type="text/javascript" th:inline="javascript">
+                var adminCount=[[${session.adminCount}]];
+                var hyCount=[[${session.hyCount}]];
+                var Javalu=[[${session.Javalu}]];
+                var wxzz=[[${session.wxzz}]];
+                var grrz=[[${session.grrz}]];
+                var qt1=[[${session.qt1}]];
+                var Monday=[[${session.Monday}]];
+                var Tuesday =[[${session.Tuesday}]];
+                var Wednesday =[[${session.Wednesday}]];
+                var Thursday =[[${session.Thursday}]];
+                var Friday =[[${session.Friday}]];
+                var Saturday =[[${session.Saturday}]];
+                var Sunday=[[${session.Sunday}]];
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main1'));
+
+                // 指定图表的配置项和数据
+                var option = {
+                    grid: {
+                        top: '5%',
+                        right: '1%',
+                        left: '1%',
+                        bottom: '10%',
+                        containLabel: true
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ['周一','周二','周三','周四','周五','周六','周日']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        name:'用户量',
+                        data: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday],
+                        type: 'line',
+                        smooth: true
+                    }]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+
+
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main3'));
+
+                // 指定图表的配置项和数据
+                var option = {
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: ['管理员','会员']
+                    },
+                    series : [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius : '55%',
+                            center: ['50%', '60%'],
+                            data:[
+                                {value:adminCount, name:'管理员'},
+                                {value:hyCount, name:'会员'}
+                            ],
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+
+
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+
+
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main4'));
+
+                // 指定图表的配置项和数据
+                var option = {
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: ['我的Java路','文学杂志','个人日志','其他']
+                    },
+                    series : [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius : '55%',
+                            center: ['50%', '60%'],
+                            data:[
+                                {value:Javalu, name:'我的Java路'},
+                                {value:wxzz, name:'文学杂志'},
+                                {value:grrz, name:'个人日志'},
+                                {value:qt1, name:'其他'}
+                            ],
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            </script>
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">msos系统信息</div>
+                        <div class="layui-card-body ">
+                            <table class="layui-table">
+                                <tbody>
+                                    <tr>
+                                        <th>博客版本</th>
+                                        <td>2.0</td></tr>
+                                    <tr>
+                                        <th>服务器地址</th>
+                                        <td>http://60.205.188.140:8888/</td></tr>
+                                    <tr>
+                                        <th>操作系统</th>
+                                        <td>Windows 10</td></tr>
+                                    <tr>
+                                        <th>运行环境</th>
+                                        <td>Apache/Tomcat/9.0.44</td></tr>
+                                    <tr>
+                                        <th>JDK版本</th>
+                                        <td>1.8</td></tr>
+                                    <tr>
+                                        <th>服务器环境</th>
+                                        <td>Linux</td></tr>
+                                    <tr>
+                                        <th>MYSQL版本</th>
+                                        <td>8.0.23</td></tr>
+                                    <tr>
+                                        <th>上传附件限制</th>
+                                        <td>2M</td></tr>
+                                    <tr>
+                                        <th>执行时间限制</th>
+                                        <td>30s</td></tr>
+                                    <tr>
+                                        <th>OSS剩余空间</th>
+                                        <td>366015.2M</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">开发团队</div>
+                        <div class="layui-card-body ">
+                            <table class="layui-table">
+                                <tbody>
+                                    <tr>
+                                        <th>版权所有</th>
+                                        <td>msos进击的攻城狮
+                                            <a href="http://60.205.188.140:8888/" target="_blank">访问msos</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>开发者</th>
+                                        <td>dyzz-代镓丞-杨小倩-曾伟丽-周岭</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <style id="welcome_style"></style>
+                <div class="layui-col-md12">
+                    <blockquote class="layui-elem-quote layui-quote-nm">感谢您的到来和使用</blockquote></div>
+            </div>
+        </div>
+        </div>
+    </body>
+</html>

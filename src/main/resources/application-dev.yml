@@ -1,0 +1,75 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/msos?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=CONVERT_TO_NULL
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    #druid 数据源专有配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+
+  mvc:
+    formcontent:
+      filter:
+        enabled: true
+
+  thymeleaf:
+    prefix: classpath:/static/
+    suffix: .html
+    cache: false
+  freemarker:
+    cache: false
+
+  mail:
+    username: 2574833532@qq.com
+    password: 123456
+    host: smtp.qq.com
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+  redis:
+    host: 60.205.188.140
+    port: 6666
+
+server:
+  port: 8888
+
+aliyun:
+  oss:
+    endpoint: oss-cn-chengdu.aliyuncs.com
+    accessKeyId: LTAI5t9ycf44Y7zrk1hZJqR7
+    accessKeySecret: u8sMnVriJbfDOP1Tf3S0Myj3X1wFEW
+    bucketName: msos-dyzz
+
+#tengxun:
+#  appId: 1305009997
+#  accessKey: AKIDiETR9akcDYcOt85lBKCn79vPcXBYeS0H
+#  secretKey: 1lERM0NUKs99sJTMxHOFq9BvPcXBXdRy
+#  bucketName: msos-1305009997
+#  bucket: ap-chengdu
+#  path: https://msos-1305009997.cos.ap-chengdu.myqcloud.com
+#  qianzui: msosImg
+
+
+
+mybatis:
+  type-aliases-package: club.msos.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml

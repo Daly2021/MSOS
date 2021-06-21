@@ -1,0 +1,228 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org" >
+    <head>
+        <meta charset="UTF-8">
+        <title>msos博客论坛</title>
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <link rel="stylesheet" href="../css/font.css">
+        <link rel="stylesheet" href="../css/xadmin.css">
+        <link rel="shortcut icon" th:href="@{../favicon.ico}" />
+        <!-- <link rel="stylesheet" href="./css/theme5.css"> -->
+        <script src="../layui/layui.js" charset="utf-8"></script>
+        <script type="text/javascript" src="../component/js/xadmin.js"></script>
+        <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+        <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script>
+            // 是否开启刷新记忆tab功能
+            // var is_remember = false;
+        </script>
+    </head>
+    <body class="index">
+        <!-- 顶部开始 -->
+        <div class="container">
+            <div class="logo">
+                <a href="/html/index.html">msos后台</a></div>
+            <div class="left_open">
+                <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
+            </div>
+            <ul class="layui-nav left fast-add" lay-filter="">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont">&#xe6b9;</i>新增</a>
+                    <dl class="layui-nav-child">
+                        <!-- 二级菜单 -->
+                        <dd>
+                            <a onclick="xadmin.add_tab('在tab打开','/html/member-list.html')">
+                                <i class="iconfont">&#xe6b8;</i>在tab打开</a></dd>
+                        <dd>
+                            <a onclick="xadmin.add_tab('在tab打开刷新','/html/member-del.html',true)">
+                                <i class="iconfont">&#xe6b8;</i>在tab打开刷新</a></dd>
+                    </dl>
+                </li>
+            </ul>
+            <ul class="layui-nav right" lay-filter="">
+                <a href="javascript:;">
+                    <img th:src="'http://blog-cxz.oss-cn-beijing.aliyuncs.com/'+${session.id}+'.jpg'" class="layui-nav-img">
+                </a>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"  th:text="${session.name}"></a>
+                    <dl class="layui-nav-child">
+                        <!-- 二级菜单 -->
+                        <dd>
+                            <a onclick="xadmin.open('个人信息','/toUpdateUser')">个人信息</a></dd>
+                        <dd>
+                            <a onclick="xadmin.open('切换帐号','/loginOut')">切换帐号</a></dd>
+                        <dd>
+                            <a href="/loginOut">退出</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item to-index">
+                    <a href="/homepage">前台首页</a></li>
+            </ul>
+        </div>
+        <!-- 顶部结束 -->
+        <!-- 中部开始 -->
+        <!-- 左侧菜单开始 -->
+        <div class="left-nav">
+            <div id="side-nav">
+                <ul id="nav">
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="用户管理">&#xe6b8;</i>
+                            <cite>用户管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('会员列表','/html/member-list.html',true)">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>会员列表</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('新增会员','/html/insertUser.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>新增会员</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('用户更新记录','/html/updateUser-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>用户更新记录</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="博客管理">&#xe723;</i>
+                            <cite>博客管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('在网文章列表','/html/article-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>在网文章列表</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('文章更新记录','/html/updateArticle-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>文章更新记录</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('博客评论记录','/html/comment-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>文章评论记录</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('留言记录','/html/message-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>留言记录</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('友链列表','/html/links-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>友链列表</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="管理员管理">&#xe726;</i>
+                            <cite>管理员管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('管理员列表','/html/admin-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>管理员列表</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('权限分类','/html/admin-cate.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>权限分类</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="监控管理">&#xe723;</i>
+                            <cite>监控管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('Swagger页面','/swagger-ui/index.html#')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>Swagger页面</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('Druid监控','/druid')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>Druid监控</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="图标字体">&#xe6b4;</i>
+                            <cite>图标字体</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('图标对应字体','/html/unicode.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>图标对应字体</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="其它页面">&#xe6b4;</i>
+                            <cite>其它页面</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('错误页面','/html/error.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>错误页面</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('前台页面','/homepage')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>前台页面</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- <div class="x-slide_left"></div> -->
+        <!-- 左侧菜单结束 -->
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+            <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+                <ul class="layui-tab-title">
+                    <li class="home">
+                        <i class="layui-icon">&#xe68e;</i>我的桌面</li></ul>
+                <div class="layui-unselect layui-form-select layui-form-selected" id="tab_right">
+                    <dl>
+                        <dd data-type="this">关闭当前</dd>
+                        <dd data-type="other">关闭其它</dd>
+                        <dd data-type="all">关闭全部</dd></dl>
+                </div>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <iframe th:src="${#httpServletRequest.getContextPath()}+'/desktop'" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                    </div>
+                </div>
+                <div id="tab_show"></div>
+            </div>
+        </div>
+        <div class="page-content-bg"></div>
+        <style id="theme_style"></style>
+        <!-- 右侧主体结束 -->
+        <!-- 中部结束 -->
+    </body>
+
+</html>

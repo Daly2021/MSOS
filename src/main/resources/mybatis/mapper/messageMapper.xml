@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.msos.dao.messageMapper">
+    <select id="selectMessage" parameterType="Message" resultType="Message">
+        select * from message
+        <where>
+            <if test="message_id!=null">message_id=#{message_id}</if>
+            <if test="user_id!=null">and user_id=#{user_id}</if>
+            <if test="message_content!=null">and message_content=#{message_content}</if>
+            <if test="message_time!=null">and message_time=#{message_time}</if>
+            <if test="message_parant_id!=null">and message_parant_id=#{message_parant_id}</if>
+            <if test="message_ip!=null">and message_ip=#{message_ip}</if>
+        </where>
+    </select>
+    <delete id="deleteMessage" parameterType="int">
+        delete
+        from message
+        where message_id=#{message_id}
+    </delete>
+    <update id="updateMessage" parameterType="Message">
+        update message
+        <set>
+            <if test="user_id!=null">user_id=#{user_id},</if>
+            <if test="message_content!=null">message_content=#{message_content},</if>
+            <if test="message_time!=null">message_time=#{message_time},</if>
+            <if test="message_parant_id!=null">message_parant_id=#{message_parant_id},</if>
+            <if test="message_ip!=null">message_ip=#{message_ip}</if>
+        </set>
+        where message_id=#{message_id}
+    </update>
+    <insert id="insertMessage" parameterType="Message">
+        insert into message(message_id,user_id,message_content,message_time,message_parant_id,message_ip)
+        values (#{message_id},#{user_id},#{message_content},#{message_time},#{message_parant_id},#{message_ip})
+    </insert>
+</mapper>

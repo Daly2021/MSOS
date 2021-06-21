@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>msos会员</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+  <link rel="stylesheet" href="../css/font.css">
+  <link rel="stylesheet" href="../css/xadmin.css">
+  <link rel="stylesheet" href="../component/layui/css/layui.css">
+  <script src="../component/js/jquery-3.3.1.js"></script>
+  <script src="../component/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="../component/js/xadmin.js"></script>
+  <!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="layui-layout-body">
+<!--    <input type="hidden" name="token" th:value="${session.token}">-->
+<div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a href="">演示</a>
+                <a>
+                    <cite>导航元素</cite></a>
+            </span>
+  <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+    <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+  </a>
+</div>
+<div>
+  <div>
+
+    <table class="layui-hide" id="test" lay-data="{id: 'test'}"  lay-filter="test"></table>
+  </div>
+</div>
+<script type="text/html" id="barDemo" th:inline="javascript">
+  <a class="layui-btn layui-btn-sm" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+</script>
+<script>
+  layui.use('table', function() {
+    var table = layui.table;
+    table.render({
+      elem: '#test'
+      , url: "/comment/selectComment"
+      ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+      ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+        title: '提示'
+        ,layEvent: 'LAYTABLE_TIPS'
+        ,icon: 'layui-icon-tips'
+      }]
+      , title: '用户数据表'
+      , cols: [[
+        // {type: 'checkbox', fixed: 'left'}
+        {field: 'comment_id', width: 200, title: '评论id', sort: true,align: "center"}
+        , {field: 'user_id', width: 200, title: '用户名',align: "center"}
+        , {field: 'article_id', width: 200, title: '文章id',align: "center"}
+        , {field: 'user_name', width: 200, title: '用户昵称',align: "center"}
+        , {field: 'comment_time', width: 200, title: '发表时间',align: "center"}
+        , {field: 'comment_content', width: 200, title: '评论内容',align: "center"}
+        , {fixed: 'right', title: '操作', width: 480, toolbar: '#barDemo',align: "center"}
+      ]]
+      , page: true
+      , limits: [10, 15, 20]
+      , limit: 15
+
+      , parseData: function (res) {
+        var result;
+        console.log(res);
+        // console.log(JSON.stringify(res));
+        if (this.page.curr) {
+          result = res.data.slice(this.limit * (this.page.curr - 1), this.limit * this.page.curr);
+        } else {
+          result = res.data.slice(0, this.limit);
+        }
+        return {
+          "code": res.code,
+          "msg": res.msg,
+          "count": res.count,
+          "data": result
+        };
+
+      }
+    });
+    //监听行工具事件
+    table.on('tool(test)', function (obj) {
+      var data = obj.data;
+      if (obj.event === 'del') {
+        layer.confirm('真的删除行么', function (index) {
+          $.ajax({
+                    type: "post",
+                    url: "/comment/toComment",
+                    data: {"comment_id": data.comment_id},
+                    //dataType: "json",
+                    success: function (msg) {
+                      obj.del();
+                      layer.close(index);
+                      layer.confirm('删除成功!')
+                    },
+                    error: function () {
+                      layer.confirm('删除失败!')
+                    },
+                  }
+          )
+        });
+      }
+    });
+  })
+
+</script>
+</body>
+</html>

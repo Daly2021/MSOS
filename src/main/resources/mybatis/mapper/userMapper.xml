@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.msos.dao.userMapper">
+
+    <select id="selectUser" parameterType="User" resultType="User">
+        select * from tuser
+       <where>
+           <if test="user_id!=null">user_id=#{user_id}</if>
+           <if test="user_password!=null">and user_password=#{user_password}</if>
+           <if test="user_name!=null">and user_name=#{user_name}</if>
+           <if test="user_email!=null">and user_email=#{user_email}</if>
+           <if test="user_phone!=null">and user_phone=#{user_phone}</if>
+           <if test="user_sex!=null">and user_sex=#{user_sex}</if>
+           <if test="user_ip!=null">and user_ip=#{user_ip}</if>
+           <if test="user_role!=null">and user_role=#{user_role}</if>
+           <if test="user_birthday!=null">and user_birthday=#{user_birthday}</if>
+       </where>
+    </select>
+    <delete id="deleteUser" parameterType="String">
+        delete
+        from tuser
+        where user_id=#{user_id}
+    </delete>
+    <update id="updateUser" parameterType="User">
+        update tuser
+        <set>
+            <if test="user_password!=null">user_password=#{user_password},</if>
+            <if test="user_name!=null">user_name=#{user_name},</if>
+            <if test="user_email!=null">user_email=#{user_email},</if>
+            <if test="user_phone!=null">user_phone=#{user_phone},</if>
+            <if test="user_sex!=null">user_sex=#{user_sex},</if>
+            <if test="user_ip!=null">user_ip=#{user_ip},</if>
+            <if test="user_role!=null">user_role=#{user_role},</if>
+            <if test="user_birthday!=null">user_birthday=#{user_birthday}</if>
+        </set>
+        where user_id=#{user_id}
+    </update>
+    <insert id="insertUser" parameterType="User">
+        insert into tuser(user_id,user_password,user_name,user_email,user_phone,user_sex,user_ip,user_role,user_birthday)
+        values (#{user_id},#{user_password},#{user_name},#{user_email},#{user_phone},#{user_sex},#{user_ip},#{user_role},#{user_birthday})
+    </insert>
+</mapper>
